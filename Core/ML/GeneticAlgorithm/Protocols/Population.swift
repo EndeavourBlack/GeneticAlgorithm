@@ -18,7 +18,7 @@ protocol Population {
     * Sort the candidates by fitness and return the fittest of them.
     * @return The fittest candidate
     */
-    func getFittest () -> Candidate?
+    func getFittest () -> Candidate
     /**
     * Randomly sort our population.
     */
@@ -26,6 +26,6 @@ protocol Population {
     
     func getModel() -> PopulationModel
     
-    func evolveUntilFit (currentGenerationInspector: ([Candidate?]) -> ()) -> Candidate?
+    func evolveUntilFit (currentGeneration: ([Candidate]) -> (), when evolutionIsCompleted: (fittest: Candidate) -> ()) -> Void
     
 }

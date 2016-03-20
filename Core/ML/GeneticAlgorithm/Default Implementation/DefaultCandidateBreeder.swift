@@ -10,24 +10,8 @@ import Foundation
 
 class DefaultCandidateBreeder : CandidateBreeder {
     
-    func breedCandidates(leftParent: Candidate?, rightParent: Candidate?, fitnessCalculator: FitnessCalculator) -> Candidate? {
-        if let left = leftParent {
-            if let right = rightParent {
-                
-                leftParent?.getModel()?.getGenomeCrossLength()
-                
-                return DefaultCandidate(leftParent: left, rightParent: right, fitnessCalculator: fitnessCalculator)
-                
-            }
-            else {
-                return left
-            }
-        }
-        else if let right = rightParent {
-            return right
-        }
-        
-        return nil
+    func breedCandidates(leftParent: Candidate, rightParent: Candidate, fitnessCalculator: FitnessCalculator) -> Candidate {
+        return DefaultCandidate(leftParent: leftParent, rightParent: rightParent, fitnessCalculator: fitnessCalculator)
     }
     
     func createCandidate(model: CandidateModel, fitnessCalculator: FitnessCalculator) -> Candidate {

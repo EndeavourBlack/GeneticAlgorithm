@@ -16,13 +16,12 @@ class TestFitnessCalculator : FitnessCalculator {
         var sum = -24.0
         var rawGenome = candidate.getGenome().getGenome()
         for var index = 0; index < candidate.getGenome().getLength(); index += 1 {
-            if let genomeValueAtIndex = rawGenome?[index] {
+            let genomeValueAtIndex = rawGenome[index]
 
-                if Double(solution[index]) == (Double(Int(genomeValueAtIndex * 1000))/100) {
-                    sum += 1
-                }
-                
+            if Double(solution[index]) == (Double(Int(genomeValueAtIndex * 1000))/100) {
+                sum += 1
             }
+        
         }
         
         return sum
@@ -34,9 +33,10 @@ func transform(candidate : Candidate) -> [Double] {
     var output : [Double] = [Double]()
     var rawGenome = candidate.getGenome().getGenome()
     for var index = 0; index < candidate.getGenome().getLength(); index += 1 {
-        if let genomeValueAtIndex = rawGenome?[index] {
-            output.append((Double(Int(genomeValueAtIndex * 10000))/1000.0))
-        }
+        
+        let genomeValueAtIndex = rawGenome[index]
+        output.append((Double(Int(genomeValueAtIndex * 10000))/1000.0))
+        
     }
     return output
 }
@@ -44,12 +44,16 @@ func transform(candidate : Candidate) -> [Double] {
 var population = DefaultPopulation(model: DefaultPopulationModel(), candidateBreeder: DefaultCandidateBreeder(), fitnessCalculator: TestFitnessCalculator())
 
 var itteration = 0
-var fittest = population.evolveUntilFit { (candidates: [Candidate?]) -> () in
+
+population.evolveUntilFit({ (candidates: [Candidate]) -> () in
     
-    itteration += 1
-    print(itteration)
-    print(population.getFittest()!.getFitness())
+        itteration += 1
+        print(itteration)
+        print(population.getFittest().getFitness())
     
+    }) { (fittest) -> () in
+        print(
+            transform(fittest)
+        )
 }
 
-print(transform(fittest!))

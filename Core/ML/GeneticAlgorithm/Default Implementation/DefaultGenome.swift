@@ -11,7 +11,7 @@ import Foundation
 class DefaultGenome : Genome {
     
     
-    var genome : [Double]?
+    var genome : [Double]
     
     var length : Int = 0
     var mutateChance : Double = 0
@@ -19,47 +19,47 @@ class DefaultGenome : Genome {
     var uniformCross : Bool = false
     var genomeCrossLength : Int = 1
     
-    var model : GenomeModel?
+    var model : GenomeModel
     
     init(model: GenomeModel) {
-        setModel(model)
+        self.length = model.getGenomeLength()
+        self.genome = [Double](count: self.length, repeatedValue: 0.0)
+        self.model = model
+        self.setModel(model)
         createGenome()
     }
     
     init(leftGenome : Genome, rightGenome: Genome) {
-        setModel(leftGenome.getModel())
-        
-        if let genome = breedGenome(leftGenome, rightGenome: rightGenome) {
-            setGenome(
-                genome
-            );
-        }
+        self.model = leftGenome.getModel()
+        self.genome = [Double](count: self.length, repeatedValue: 0.0)
+        self.setModel(model)
+        self.genome = breedGenome(leftGenome, rightGenome: rightGenome)
     }
     
-    func getGenome() -> [Double]? {
+    func getGenome() -> [Double] {
         return genome
     }
     
     
     
-    func setGenome(genome: [Double]) -> [Double]? {
+    func setGenome(genome: [Double]) -> [Double] {
         self.genome = genome;
         return getGenome();
     }
     
-    func getModel() -> GenomeModel? {
+    func getModel() -> GenomeModel {
         return model
     }
     
-    func setModel(possibleModel : GenomeModel?) -> Void {
-        if let model = possibleModel {
-            self.model = model;
-            setLength(model.getGenomeLength());
-            setMutateAmount(model.getMutateAmount());
-            setMutateChance(model.getMutateChance());
-            setUniformCross(model.isUniformCross());
-            setGenomeCrossLength(model.getGenomeCrossLength());
-        }
+    func setModel(model : GenomeModel) -> Void {
+
+        self.model = model;
+        setLength(model.getGenomeLength());
+        setMutateAmount(model.getMutateAmount());
+        setMutateChance(model.getMutateChance());
+        setUniformCross(model.isUniformCross());
+        setGenomeCrossLength(model.getGenomeCrossLength());
+
     }
     
     func getLength () -> Int {
@@ -108,17 +108,14 @@ class DefaultGenome : Genome {
     * @return True if created, false if already created.
     */
     func createGenome () -> Bool {
-        if let _ = genome {
-            return false
+
+        genome = [Double](count: self.length, repeatedValue: 0.0)
+        for i in 0...self.length - 1 {
+            genome[i] = (randomDouble())
         }
-        else {
-            genome = [Double](count: self.length, repeatedValue: 0.0)
-            for i in 0...self.length - 1 {
-                genome?[i] = (randomDouble())
-            }
-            
-            return true
-        }
+        
+        return true
+        
     }
     
     /**
@@ -127,13 +124,13 @@ class DefaultGenome : Genome {
     * @param index
     * @return
     */
-    func getValueAt (index: Int) -> Double? {
+    func getValueAt (index: Int) -> Double {
     
         if index > getLength() - 1 {
             return randomDouble()
         }
     
-        return self.genome?[index]
+        return self.genome[index]
     }
     
     /**
@@ -143,11 +140,7 @@ class DefaultGenome : Genome {
     * @return
     * @throws GenomeNotCompatibleException
     */
-    func breedGenome (leftGenome : Genome, rightGenome: Genome) -> [Double]? {
-        
-        if leftGenome.getLength() != rightGenome.getLength() {
-            return nil
-        }
+    func breedGenome (leftGenome : Genome, rightGenome: Genome) -> [Double] {
     
         var output : [Double] = [Double](count: getLength() * genomeCrossLength, repeatedValue: 0.0)
         
@@ -160,41 +153,42 @@ class DefaultGenome : Genome {
         for var i = 0; i < getLength(); i += genomeCrossLength {
             
             if self.isUniformCross() {
+                
                 if randomBool() {
                     parent = leftGenome
                 }
                 else {
                     parent = rightGenome
                 }
+                
             }
             else {
+                
                 if i < cross {
                     parent = leftGenome
                 }
                 else {
                     parent = rightGenome
                 }
+                
             }
         
             
             for var j = 0; j < genomeCrossLength; j += 1 {
                 
-                
-                
                 if randomDouble() < getMutateChance() {
-//                    output.append(randomDouble())
                     output[i+j] = randomDouble()
                 }
-                else if let outputValue = parent.getValueAt(i+j) {
-//                    output.append(outputValue)
-                                        output[i+j] = outputValue;
+                else {
+                    output[i+j] = parent.getValueAt(i+j)
                 }
                 
             }
-            
         
         }
+        
         return output;
+        
     }
     
     func randomDouble() -> Double {

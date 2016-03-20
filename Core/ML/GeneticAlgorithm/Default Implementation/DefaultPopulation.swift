@@ -16,7 +16,7 @@ class DefaultPopulation : Population {
     
     var generations : Int = 0
     
-    var candidates : [Candidate?]
+    var candidates : [Candidate]
     var candidateBreeder : CandidateBreeder
     var fitnessCalculator: FitnessCalculator
     
@@ -24,7 +24,7 @@ class DefaultPopulation : Population {
         self.model = model
         self.candidateBreeder = candidateBreeder
         self.fitnessCalculator = fitnessCalculator
-        candidates = [Candidate?]()
+        candidates = [Candidate]()
         createPopulation();
     }
     
@@ -33,10 +33,7 @@ class DefaultPopulation : Population {
     */
     func createPopulation () -> Void {
         let limit = getModel().getPopulationSize()
-        candidates = [Candidate?](count: limit, repeatedValue: nil)
-        for var i = 0; i < limit; i += 1 {
-            candidates[i] = (getCandidateBreeder().createCandidate(getModel(), fitnessCalculator: fitnessCalculator))
-        }
+        candidates = [Candidate](count: limit, repeatedValue: getCandidateBreeder().createCandidate(getModel(), fitnessCalculator: fitnessCalculator))
     }
     
     /**
@@ -78,7 +75,7 @@ class DefaultPopulation : Population {
         
         generations += 1
         
-        if (getModel().getFitnessCutoff() <= getFittest()?.getFitness()) {
+        if (getModel().getFitnessCutoff() <= getFittest().getFitness()) {
             return false
         }
         
@@ -89,7 +86,7 @@ class DefaultPopulation : Population {
     * Sort the candidates by fitness and return the fittest of them.
     * @return The fittest candidate
     */
-    func getFittest () -> Candidate? {
+    func getFittest () -> Candidate {
         sortPopulationByFitness()
         return candidates[0]
     }
@@ -105,23 +102,20 @@ class DefaultPopulation : Population {
         
     }
     
-    func evolveUntilFit(currentGenerationInspector: ([Candidate?]) -> ()) -> Candidate? {
-
+    func evolveUntilFit(currentGeneration: ([Candidate]) -> (), when evolutionIsCompleted: (fittest: Candidate) -> ()) {
         var isCutOff : Bool = false
         while(!isCutOff) {
             isCutOff = !self.nextGeneration();
-            currentGenerationInspector(self.getCandidates())
+            currentGeneration(self.getCandidates())
             if getModel().getGenerations() > 0 && generations == getModel().getGenerations() {
                 print("Generation cutoff met")
                 isCutOff = true
             }
         }
         
-        return self.getFittest()
+        evolutionIsCompleted(fittest: self.getFittest())
+
     }
-    
-    
-    
     
     
     func getModel() -> PopulationModel {
@@ -132,11 +126,11 @@ class DefaultPopulation : Population {
         self.model = model
     }
     
-    func getCandidates() -> [Candidate?] {
+    func getCandidates() -> [Candidate] {
         return candidates
     }
     
-    func setCandidates(defaultCandidates : [Candidate?]) -> Void {
+    func setCandidates(defaultCandidates : [Candidate]) -> Void {
         self.candidates = defaultCandidates;
     }
     

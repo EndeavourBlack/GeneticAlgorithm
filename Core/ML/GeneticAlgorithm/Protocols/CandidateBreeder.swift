@@ -23,6 +23,6 @@ protocol CandidateBreeder {
     * @param rightParent
     * @return
     */
-    func breedCandidates (leftParent: Candidate?, rightParent: Candidate?, fitnessCalculator: FitnessCalculator) -> Candidate?
+    func breedCandidates (leftParent: Candidate, rightParent: Candidate, fitnessCalculator: FitnessCalculator) -> Candidate
     
 }
