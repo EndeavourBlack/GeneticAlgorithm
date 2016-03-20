@@ -26,6 +26,6 @@ protocol Population {
     
     func getModel() -> PopulationModel
     
-    func evolveUntilFit (currentGeneration: ([Candidate]) -> (), when evolutionIsCompleted: (fittest: Candidate) -> ()) -> Void
+    func evolveUntilFit (currentGeneration: (fittest: Candidate) -> (), when evolutionIsCompleted: (fittest: Candidate) -> ()) -> Void
     
 }

@@ -102,11 +102,11 @@ class DefaultPopulation : Population {
         
     }
     
-    func evolveUntilFit(currentGeneration: ([Candidate]) -> (), when evolutionIsCompleted: (fittest: Candidate) -> ()) {
+    func evolveUntilFit(currentGeneration: (fittest: Candidate) -> (), when evolutionIsCompleted: (fittest: Candidate) -> ()) {
         var isCutOff : Bool = false
         while(!isCutOff) {
             isCutOff = !self.nextGeneration();
-            currentGeneration(self.getCandidates())
+            currentGeneration(fittest: self.getFittest())
             if getModel().getGenerations() > 0 && generations == getModel().getGenerations() {
                 print("Generation cutoff met")
                 isCutOff = true

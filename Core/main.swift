@@ -45,11 +45,11 @@ var population = DefaultPopulation(model: DefaultPopulationModel(), candidateBre
 
 var itteration = 0
 
-population.evolveUntilFit({ (candidates: [Candidate]) -> () in
+population.evolveUntilFit({ (fittest: Candidate) -> () in
     
         itteration += 1
         print(itteration)
-        print(population.getFittest().getFitness())
+        print(fittest.getFitness())
     
     }) { (fittest) -> () in
         print(

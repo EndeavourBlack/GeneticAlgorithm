@@ -142,7 +142,7 @@ class DefaultGenome : Genome {
     */
     func breedGenome (leftGenome : Genome, rightGenome: Genome) -> [Double] {
     
-        var output : [Double] = [Double](count: getLength() * genomeCrossLength, repeatedValue: 0.0)
+        var output : [Double] = [Double](count: getLength(), repeatedValue: 0.0)
         
         let cross : Int = randomInt(
             getGenomeCrossLength()
