@@ -32,10 +32,10 @@ class DefaultPopulation : Population {
     * Create the population of candidates.
     */
     func createPopulation () -> Void {
-        candidates = [DefaultCandidate]();
         let limit = getModel().getPopulationSize()
+        candidates = [Candidate?](count: limit, repeatedValue: nil)
         for var i = 0; i < limit; i += 1 {
-            candidates.append(getCandidateBreeder().createCandidate(getModel(), fitnessCalculator: fitnessCalculator))
+            candidates[i] = (getCandidateBreeder().createCandidate(getModel(), fitnessCalculator: fitnessCalculator))
         }
     }
     
@@ -46,10 +46,6 @@ class DefaultPopulation : Population {
         if isCandidatesSorted() {
             return
         }
-        
-//        for var i = 0; i < getModel().getPopulationSize(); i += 1 {
-//            candidates[i]?.calculateFitness();
-//        }
         
         candidates.sortInPlace { (left : Candidate?, right: Candidate?) -> Bool in
             return CandidateComparitor.isOrderedBefore(left, right: right)

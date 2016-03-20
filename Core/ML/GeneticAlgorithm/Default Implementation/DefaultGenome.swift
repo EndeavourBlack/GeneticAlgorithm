@@ -112,9 +112,9 @@ class DefaultGenome : Genome {
             return false
         }
         else {
-            genome = [Double]()
-            for _ in 0...self.length {
-                genome?.append(randomDouble())
+            genome = [Double](count: self.length, repeatedValue: 0.0)
+            for i in 0...self.length - 1 {
+                genome?[i] = (randomDouble())
             }
             
             return true
@@ -149,7 +149,7 @@ class DefaultGenome : Genome {
             return nil
         }
     
-        var output : [Double] = [Double]()
+        var output : [Double] = [Double](count: getLength() * genomeCrossLength, repeatedValue: 0.0)
         
         let cross : Int = randomInt(
             getGenomeCrossLength()
@@ -182,12 +182,12 @@ class DefaultGenome : Genome {
                 
                 
                 if randomDouble() < getMutateChance() {
-                    output.append(randomDouble())
-//                    output[i+j] = randomDouble()
+//                    output.append(randomDouble())
+                    output[i+j] = randomDouble()
                 }
                 else if let outputValue = parent.getValueAt(i+j) {
-                    output.append(outputValue)
-                    //                    output[i+j] = outputValue;
+//                    output.append(outputValue)
+                                        output[i+j] = outputValue;
                 }
                 
             }
