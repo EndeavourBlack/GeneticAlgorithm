@@ -15,10 +15,10 @@ class TestFitnessCalculator : FitnessCalculator {
     func calculateFitness(candidate: Candidate) -> Double {
         var sum = -24.0
         var rawGenome = candidate.getGenome().getGenome()
-        for var index = 0; index < candidate.getGenome().getLength(); index += 1 {
+        for var index = 0; index < candidate.getGenome().length; index += 1 {
             let genomeValueAtIndex = rawGenome[index]
 
-            if Double(solution[index]) == (Double(Int(genomeValueAtIndex * 1000))/100) {
+            if Double(solution[index]) == (Double(Int(genomeValueAtIndex * 10000))/1000) {
                 sum += 1
             }
         
@@ -32,7 +32,7 @@ class TestFitnessCalculator : FitnessCalculator {
 func transform(candidate : Candidate) -> [Double] {
     var output : [Double] = [Double]()
     var rawGenome = candidate.getGenome().getGenome()
-    for var index = 0; index < candidate.getGenome().getLength(); index += 1 {
+    for var index = 0; index < candidate.getGenome().length; index += 1 {
         
         let genomeValueAtIndex = rawGenome[index]
         output.append((Double(Int(genomeValueAtIndex * 10000))/1000.0))

@@ -27,7 +27,8 @@ protocol Genome {
     * Get the length of the genome.
     * @return
     */
-    func getLength () -> Int
+    var length : Int {get set}
+//    func getLength () -> Int
     /**
     * Return value of a gene at a specified index.
     * This will return a random boolean value if the index is out of bounds.

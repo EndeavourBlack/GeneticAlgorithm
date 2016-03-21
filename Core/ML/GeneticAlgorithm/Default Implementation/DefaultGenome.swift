@@ -62,9 +62,9 @@ class DefaultGenome : Genome {
 
     }
     
-    func getLength () -> Int {
-        return length
-    }
+//    func getLength () -> Int {
+//        return length
+//    }
     
     func setLength (length: Int) -> Int {
         self.length = length
@@ -111,7 +111,7 @@ class DefaultGenome : Genome {
 
         genome = [Double](count: self.length, repeatedValue: 0.0)
         for i in 0...self.length - 1 {
-            genome[i] = (randomDouble())
+            genome[i] = Random.randomDouble()
         }
         
         return true
@@ -125,11 +125,6 @@ class DefaultGenome : Genome {
     * @return
     */
     func getValueAt (index: Int) -> Double {
-    
-        if index > getLength() - 1 {
-            return randomDouble()
-        }
-    
         return self.genome[index]
     }
     
@@ -142,19 +137,19 @@ class DefaultGenome : Genome {
     */
     func breedGenome (leftGenome : Genome, rightGenome: Genome) -> [Double] {
     
-        var output : [Double] = [Double](count: getLength(), repeatedValue: 0.0)
+        var output : [Double] = [Double](count: length, repeatedValue: 0.0)
         
-        let cross : Int = randomInt(
+        let cross : Int = Random.randomInt(
             getGenomeCrossLength()
         )
 
         var parent : Genome
         
-        for var i = 0; i < getLength(); i += genomeCrossLength {
+        for var i = 0; i < length; i += genomeCrossLength {
             
             if self.isUniformCross() {
                 
-                if randomBool() {
+                if Random.randomBool() {
                     parent = leftGenome
                 }
                 else {
@@ -176,11 +171,11 @@ class DefaultGenome : Genome {
             
             for var j = 0; j < genomeCrossLength; j += 1 {
                 
-                if randomDouble() < getMutateChance() {
-                    output[i+j] = randomDouble()
+                if Random.randomDouble() < getMutateChance() {
+                    output[i+j] = Random.randomDouble()
                 }
                 else {
-                    output[i+j] = parent.getValueAt(i+j)
+                    output[i+j] = parent.getGenome()[i+j]
                 }
                 
             }
@@ -189,19 +184,6 @@ class DefaultGenome : Genome {
         
         return output;
         
-    }
-    
-    func randomDouble() -> Double {
-        return Double(arc4random()) /  Double(UInt32.max)
-    }
-    
-    func randomInt (limit : Int) -> Int {
-        let val : UInt32 = UInt32(limit)
-        return Int(arc4random_uniform(val))
-    }
-    
-    func randomBool() -> Bool {
-        return arc4random_uniform(2) == 0 ? true: false
     }
     
 }
