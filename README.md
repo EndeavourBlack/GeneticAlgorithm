@@ -1,5 +1,11 @@
 # Swift Genetic Algorithm
-A genetic algorithm written in swift, limited to Foundation libraries in the hope of being interoperable with Swift on Linux
+A genetic algorithm written in swift. Linux compatible.
+
+
+[![Swift 3.0](https://img.shields.io/badge/Swift-3.0-orange.svg?style=flat)](https://developer.apple.com/swift/)
+[![Platforms Linux](https://img.shields.io/badge/Platforms-Linux-lightgray.svg?style=flat)](https://developer.apple.com/swift/)
+[![License MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat)](https://tldrlegal.com/license/mit-license)
+
 
 ## Ussage
 
