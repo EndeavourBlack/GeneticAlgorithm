@@ -6,8 +6,6 @@
 //  Copyright © 2016 scottbyrns. All rights reserved.
 //
 
-import Foundation
-
 class DefaultPopulationModel : PopulationModel {
 
     var PopulationSize = 25;

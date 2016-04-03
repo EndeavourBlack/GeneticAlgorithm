@@ -6,7 +6,6 @@
 //  Copyright © 2016 scottbyrns. All rights reserved.
 //
 
-import Foundation
 import Venice
 
 class DefaultPopulation : Population {

@@ -6,10 +6,8 @@
 //  Copyright © 2016 scottbyrns. All rights reserved.
 //
 
-import Foundation
-
 protocol PopulationModel : CandidateModel {
-    
+
     /**
     * @return Number of genetic candidates to create.
     */
@@ -22,5 +20,5 @@ protocol PopulationModel : CandidateModel {
     * @return Percentage of population to retain per generation.
     */
     func getPopulationCutoff () -> Double
-    
+
 }

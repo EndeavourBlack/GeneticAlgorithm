@@ -6,10 +6,7 @@
 //  Copyright © 2016 scottbyrns. All rights reserved.
 //
 
-import Foundation
-
 class DefaultGenome : Genome {
-
 
     var genome : [Double]
 
@@ -40,8 +37,6 @@ class DefaultGenome : Genome {
         return genome
     }
 
-
-
     func setGenome(genome: [Double]) -> [Double] {
         self.genome = genome;
         return getGenome();
@@ -61,10 +56,6 @@ class DefaultGenome : Genome {
         setGenomeCrossLength(model.getGenomeCrossLength());
 
     }
-
-//    func getLength () -> Int {
-//        return length
-//    }
 
     func setLength (length: Int) -> Int {
         self.length = length

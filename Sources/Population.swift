@@ -6,10 +6,8 @@
 //  Copyright © 2016 scottbyrns. All rights reserved.
 //
 
-import Foundation
-
 protocol Population {
-    
+
     /**
     * Create the next generation of the population.
     */
@@ -23,9 +21,9 @@ protocol Population {
     * Randomly sort our population.
     */
     func randomSortCandidates () -> Void
-    
+
     func getModel() -> PopulationModel
-    
+
     func evolveUntilFit (currentGeneration: (fittest: Candidate) -> (), when evolutionIsCompleted: (fittest: Candidate) -> ()) -> Void
-    
+
 }
